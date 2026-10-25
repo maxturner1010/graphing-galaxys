@@ -60,6 +60,14 @@ def genlog_print(*args):
         func += f"{var} x logx^{counter} "
         counter += 1
     return func
+def genpow_print(*args):
+    string = f"y = "
+    for i in range(0,len(args),2):
+        if i > 0:
+            string += "+ "
+        string += f"{args[i]} * x^{i + 1} "
+    return string
+
 def get_chi2(true_data,modle_data,errors):
     #get kai2 for each data point in np array and the find sum
     kai2 = ((true_data - modle_data)/errors)**2
@@ -163,14 +171,20 @@ chosen_data = []
 print("here is the data")
 for x in best_results.keys():
     for type in best_results[x].keys():
-        print(f"best data for {type} is {best_results[x][type][1]} with reduce_chi2:{best_results[x][type][2]}  aic:{best_results[x][type][3]}  bic:{best_results[x][type][4]}")
+        print(f"best data for {type} is {best_results[x][type][1].__name__} with reduce_chi2:{best_results[x][type][2]}  aic:{best_results[x][type][3]}  bic:{best_results[x][type][4]}")
     choose = input("input chi2,aic or bic to select best data: ")
     chosen_data.append(best_results[x][f"best_{choose}_data"])
 # smooth the curve by using multiple x values
 for data in chosen_data:
     data_type = data[1]
     best_data = data[0]
-    print(genpol_print(*best_data))
+    if data_type is genpol_func:
+        function_data = genpol_print(*best_data)
+    if data_type is genpow_func:
+        function_data = genpow_print(*best_data)
+    if data_type is genlog_func:
+        function_data = genlog_print(*best_data)
+    print(f"data type is:{data_type.__name__}, function is: {function_data} ")
     x = np.linspace(15.5,30,100)
     plt.plot(x,data_type(x,*best_data))
 
@@ -179,6 +193,9 @@ for data in chosen_data:
 plt.xlabel("magnitude")
 plt.ylabel("galazys per unit area")
 #print(genpol_print(*best_data))
+
+
+plt.show()
 
 
 plt.show()
