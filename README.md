@@ -8,6 +8,8 @@ Since then I have added extra functionality so that the code can find a good typ
 
 In plotting the models against the data they are supposed to represent using matplotlib I have found the modules look like they represent the data it is trying to fit to showing that the code does work.
 
+Currently I am plotting astronomy data of magnitude against galaxy's per area.
+
 Future additions:
 - I would like to test how accurately my code can predict the models that data can represent by getting points from a function, adding noise and then seeing if the original model is correctly predicted. I could test for different amounts of noise and different amounts of data points to test how effective AIC, BIC, reduce chi2 are under different types of data (noise level, function type, number of data points).
 - add more types of models
